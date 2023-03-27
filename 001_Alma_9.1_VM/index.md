@@ -1,1 +1,100 @@
-this will list some steps
+# Installation of and setup Alma Linux for dotNet development.
+### ( these screen shots were taken within a VirtualBox VM, but aside from that the commands and setup would apply to a real workstation as well )
+
+- Create a new VM ... I'll provide screen shots of my typical settings pages but you do you.
+- ![step 1 - creating a new Virtual Box VM via the wizard](images/010_vbox_setup.JPG)
+- ![step 2 - creating a new Virtual Box VM via the wizard](images/020_vbox_setup.JPG)
+- ![step 3 - creating a new Virtual Box VM via the wizard](images/030_vbox_setup.JPG)
+- ![step 4 - creating a new Virtual Box VM via the wizard](images/040_vbox_setup.JPG)
+- ![step 5 - creating a new Virtual Box VM via the wizard](images/050_vbox_setup.JPG)
+- ![step 6 - creating a new Virtual Box VM via the wizard](images/060_vbox_setup.JPG)
+- ![step 7 - creating a new Virtual Box VM via the wizard](images/070_vbox_setup.JPG)
+- Save these additional settings and Start the VM
+- ![step 8 - start the VM](images/080_vbox_setup.JPG)
+- ![step 9 - choose your language](images/090_vbox_setup.JPG)
+- On the next screen, we'll be focusing on interacting with 5 pieces of configuration
+- ![](images/100_vbox_setup.JPG)
+- 1 => Click "Software Selection" and change "Basic Environment" from "Server with GUI" to "Workstation" and click "Done" in the upper left.
+- ![](images/110_vbox_setup.JPG)
+- 2 => Click "Installation Destination" and confirm that, for basic demonstration purposes, that the large disk/partition is selected and click "Done" in the upper left.
+- ![](images/120_vbox_setup.JPG)
+- 3 => Click "Network & Host Name" and provide a host name.  Click "Apply" and then click "Done" in the upper left.
+- ![](images/130_vbox_setup.JPG)
+- 4 => Click "Root Password" and provide a password.  Click "Done" in the upper left.  Note: if you are providing a weak password, this screen in the Wizard will make you click "Done" twice to confirm that you do in fact want to proceed with a weak password.
+- ![](images/140_vbox_setup.JPG)
+- 5 => Click "User Creation" provide a username & password.  Clikc "Done" in the upper left. Note: if you are providing a weak password, this screen in the Wizard will make you click "Done" twice to confirm that you do in fact want to proceed with a weak password.
+- ![](images/150_vbox_setup.JPG)
+- You can now click "Begin Installation" ... this will begin the installation.  
+- ![](images/160_vbox_setup.JPG)
+- Once the installation is complete, the installer will let you know and now you can reboot the system by clicking "Reboot System"
+- ![](images/170_vbox_setup.JPG)
+- Once the system has rebooted, you have logged in, and you may make it to your desktop environment, you may be prompted to take a "tour" ... take the tour and finish ... or just skip the tour.
+- Now start a terminal.  This can be done by either hitting the Super Key (ie, the Windows key) or by clicking "Activities" in the upper left.  Eithe way, this will bring you to a place where you can start typing "Terminal" and select the Terminal icon to start the Terminal
+- ![](images/180_vbox_setup.JPG)
+- You should now be here:
+- ![](images/190_vbox_setup.JPG)
+- The first command will be to refresh our cache of system software sources.
+- ``` sudo dnf makecache -–refresh ```
+- (since this is the first time you running a ``` sudo ``` command, you will be prompted for your password) ... type your password and let the command finish.  As it runs, you'll see some output as the caches are updated and you'll end up back at your prompted.
+- ![](images/210_vbox_setup.JPG)
+- The next command we'll run will apply any available system updates.
+- ``` sudo dnf upgrade -–refresh ```
+- This command will run in much the same way as the previous but if there are software packages that need updating, the system will be upgrade.  There is a chance that you system may already be update up to date.  Review the output on your screen; if it looks like software updates were applied, now would be a good time to restart.  Otherwise, proceed.
+- ![](images/220_vbox_setup.JPG)
+- The next command will be to install a dev-tools package group.
+- ``` sudo dnf groupinstall "Development Tools" ```
+- This command will first output a listing of all the changes that are about to happen
+- ![](images/230_vbox_setup.JPG)
+- Type "y" and hit enter to proceed.  If you get prompted to import an update to the AlmaLinux AppStream GPG key, type "y" to proceed
+- ![](images/240_vbox_setup.JPG)
+- Now is a great time again to reboot.  So, restart/reboot your computer/VM and log back in once your restarted.
+- If you are infact running this as a Virtual Machine, now is a great time to install the VirtualBox Linux Additions ... these help with things like screen-resizing, mouse movements, and sharing the clip-board.   So, from the parent window of your VM, click the "Devices" pull-down and choose "Insert Guest Additions CD image ..."
+- ![](images/250_vbox_setup.JPG)
+- On this version of Alma Linux, it should be configured for Auto-Play if there is an action that can be taken when a virtual disk image is inserted, so you should see a pop-up like this.
+- ![](images/260_vbox_setup.JPG)
+- Go ahead and click "Run', type your password and click "Authenticate" ... this will kick off the install off the virtual CD image from Virtual Box.
+- ![](images/270_vbox_setup.JPG)
+- Once that completes, this, again, is a perfect time to reboot your VM image before we proceed.  So, reboot, log back in, and get back to the terminal.
+- ![](images/280_vbox_setup.JPG)
+- Once rebooted, and back in the terminal, run the following command:
+- ``` sudo dnf groupinstall ".NET Development" ```
+- You be prompted to confirm that this is infact what you want to do.  So type "y", press Enter, and let that installation run.
+- ![](images/290_vbox_setup.JPG)
+- Oddly enough, it doesn't do much of anything... like .Net SDKs were installed ... luckily at the time of this writing, the standard Alma sources support both the 6.0 LTS version of the dotNetCore SDK as well as version 7.0 of the SDK.  So, we're gonna take care of that next.
+- Run:
+- ``` sudo dnf install dotnet-sdk-6.0.x86_64 ``` 
+- You will get prompted with a display of all the changes that are about occur.  Type "y" and proceed.
+- ![](images/300_vbox_setup.JPG)
+- So now, you should see the output of the completed installation and the end of that should look something like this:
+- ![](images/310_vbox_setup.JPG)
+- Now run:
+- ``` sudo dnf install dotnet-sdk-7.0.x86_64 ```
+- Like the last install command, you will be prompted with a display of all that changes that are about type occur.  Type "y" and proceed.
+- ![](images/320_vbox_setup.JPG)
+- And again, like the last install, you should see an installation summary that looks similar to this
+- ![](images/330_vbox_setup.JPG)
+- Now, to test our installations, we can run ``` dotnet --list-sdks ``` and see that our beloved SDKs are in fact installed.
+- ![](images/340_vbox_setup.JPG)
+- Next, we should install a terrific editor/IDE for dotnet.  Let's go with VS Code.  The essentials of these next few steps were learned from [this page](https://idroot.us/install-visual-studio-code-almalinux-9/) so be sure to check that out for more details.
+- From within the terminal, enter (paste) and run the following 4 commands:
+- 1 => ``` printf "[vscode]\nname=packages.microsoft.com\nbaseurl=https://packages.microsoft.com/yumrepos/vscode/\nenabled=1\ngpgcheck=1\nrepo_gpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc\nmetadata_expire=1h" | sudo tee -a /etc/yum.repos.d/vscode.repo ```
+- 2 => ``` sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc ```
+- 3 => ``` sudo dnf update ```
+- 4 => ``` sudo dnf install code ```
+- These commands set up Microsoft as a valid package repository and kick off the installation which should now look like this:
+- ![](images/360_vbox_setup.JPG) 
+- Even the goal of this article was to install DotNet, we also often need NodeJS.  To accomplish that, we'll use NVM (node version manager) by following the instructions from [this page](https://github.com/nvm-sh/nvm).  
+- At the time of this writing, the version of NVM is v0.39.3.
+- From within the Terminal, run the following command:
+- ``` curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash ```
+- The output of that command, should look something like:
+- ![](images/370_vbox_setup.JPG) 
+- Because of the way NVM installs, you will need to "exit" your terminal and re-open Terminal.
+- Now we can easily install something like the latest LTS release of NodeJS with this command:
+- ``` nvm instal --lts ```
+- Which, when complete, will look something like this:
+- ![](images/380_vbox_setup.JPG) 
+- We can validate this installation by checking the version of Node and NPM:
+- ![](images/390_vbox_setup.JPG) 
+
+- That's it for this one.
