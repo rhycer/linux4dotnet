@@ -1,4 +1,4 @@
-# Installation and setup Alma Linux for dotNet development.
+# Installation and setup of Alma Linux for dotNet development.
 ### ( these screen shots were taken within a VirtualBox VM, but aside from that the commands and setup would apply to a real workstation as well )
 
 - Create a new VM ... I'll provide screen shots of my typical settings pages but you do you.
